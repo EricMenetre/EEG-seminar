@@ -1,0 +1,622 @@
+---
+title: "If statements dans Excel et R"
+subtitle: "EEG seminar - NPL group : 25.03.2019"
+author: "Eric Ménétré"
+output: ioslides_presentation
+---
+
+## Prochains EEG séminars
+
+Création d'un journal club destiner à affiner les connaissance de chacun dans le domaine de : 
+
+* l'EEG
+* IRMf et autres méthodes d'imagerie cérébrale
+* Statistiques et méthodologie
+* aspects techniques (utilisation d'un nouveau logiciel,...)
+* Autre
+
+## Prochains EEG séminars
+
+Fonctionnement : 
+
+* Pour le premier séminaire, article choisi par Marina 
+* Présentation d'Anne-lise et/ou Eric
+* A la fin de la présentation --> présentateurs proposent un article pour le prochain journal club
+* Attribution de la présentation de l'article choisi à quelqu'un parmi l'audience
+* La personne désignée présentera l'article et choisira un autre article attribué au suivant
+* Ainsi de suite... 
+
+Fonctionnement structuré mais flexible... 
+
+## Objectifs
+
+- Poser les principes de la manipulation de base de données
+- Intérêts des si/if et autres statements
+- Vous donner les bases pour une utilisation simple de ces outils
+- Partir d'Excel --> vers R
+
+## Utilité des si dans le traitement de base de données
+
+- Permet de manipuler des données complexes avec plus de facilité ! 
+
+
+Exemple : 
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center', fig.cap="Base de donnée initiale"}
+library(png)
+library(grid)
+
+data_clean <- readPNG("D:/menetre/Desktop/pres if R seminar/database_clean.PNG")
+grid.raster(data_clean)
+
+```
+
+## Exemple
+
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center'}
+
+ex.si.simple <- readPNG("D:/menetre/Desktop/pres if R seminar/ex_si_simple.PNG")
+grid.raster(ex.si.simple)
+
+
+```
+
+## Exemple
+
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center'}
+
+ex.si.simple_2 <- readPNG("D:/menetre/Desktop/pres if R seminar/ex_si_simple_2.PNG")
+grid.raster(ex.si.simple_2)
+
+
+```
+
+
+## Exemple
+
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center'}
+
+ex.si.simple_3 <- readPNG("D:/menetre/Desktop/pres if R seminar/ex_si_simple_3.PNG")
+grid.raster(ex.si.simple_3)
+
+
+```
+
+## A vous de jouer !
+
+Rappel de la syntaxe : 
+
+```{Excel}
+=SI(argument logique; valeur si vrai; valeur si faux)
+
+```
+
+pour rappel : 
+
+- Argument logique : argument ayant pour réponse vrai ou faux, p.ex: A > B
+- valeur si vrai : si A est effectivement plus grand que B, alors... 
+- Valeur si faux : si A n'est pas plus grand que B (peut être égal!), alors... 
+
+Opérateurs : 
+* < : plus petit que
+* > : plus grand que 
+* = : égal
+* <> : différent de 
+* >= : plus grand ou égal à 
+* ...
+
+
+## Exercice 1
+
+Dans le jeu de données "data_ex_1" : 
+
+* Pour toutes les valeurs supérieures ou égales à 10, inscrivez dans la colone "exercice" le texte "Grand"
+* Pour toutes les valeurs inférieures à 10, inscrivez dans la colonne "exercice" le texte "Petit"
+
+## OU et ET statements
+
+Lorsque l'on souhaite que le SI statement soit dépendant de plusieurs arguments logiques : 
+
+* ET : stipule que le premier argument logique **ET** le second argument logique doivent être vrais pour que la partie "valeur si vrai" s'affiche
+* OU : idem mais **SOIT** la première **SOIT** la deuxième condition doivent être remplies pour que l'argument soit vrai
+
+## OU et ET statements - exemple
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center'}
+
+ex.si.et <- readPNG("D:/menetre/Desktop/pres if R seminar/ex_si_et.PNG")
+grid.raster(ex.si.et)
+```
+
+## OU et ET statements - exemple
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center'}
+
+ex.si.ou <- readPNG("D:/menetre/Desktop/pres if R seminar/ex_ou_et.PNG")
+grid.raster(ex.si.ou)
+```
+
+## A vous de jouer ! 
+
+Rappel de la syntaxe : 
+
+```{Excel}
+=SI(ET(argument logique 1; argument logique 2;...); valeur si vrai;
+    valeur si faux)
+
+```
+
+Arguments : 
+
+* Plusieurs arguments menant à une valeur boléenne --> vrai/faux
+* Valeur si vrai
+* Valeur si faux 
+
+## Exercice 2
+
+dans le jeu de données data_ex2 : 
+
+* Affichez dans la colonne "ex_2.1" le texte "lu et approuvé" lorsque la colonne "lecture" vaut "ok" et que la colonne "approbation" vaut "ok"
+* Affichez "lu ou approuvé" dans la colonne "ex_2.2" lorsque soit "lecture" vaut "ok" ou "approbation" vaut "ok"
+
+## Translation vers R
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center'}
+
+rexcel <- readPNG("D:/menetre/Desktop/pres if R seminar/rexcel.PNG")
+grid.raster(rexcel)
+```
+
+## if statements
+
+R est en anglais par conséquent les statements aussi : 
+
+* SI <- if
+* Pour le OU et le ET, voyons ca plus tard... 
+
+syntaxe du if dans R : 
+
+Le test de l'argument logique peut se faire dans la console directement : 
+
+```{r}
+1>2
+
+```
+
+
+## if statements 
+
+Le but de l'argument if est d'attribuer une conséquence si l'argument logique est satisfait. Par exemple : 
+
+```{r}
+
+if (1>2){
+  print("bingo!")
+} else {
+  print("dommage...")
+}
+```
+
+En version décryptée : 
+
+```{autre}
+if (argument logique) {
+  "action si l'argument logique est vrai"
+} else {
+  "action si l'argument logique est faux" 
+}
+```
+
+## Avous de jouer ! 
+
+Rappel de la syntaxe : 
+```{autre}
+if (argument logique) {
+  "action si l'argument logique est vrai"
+} else {
+  "action si l'argument logique est faux" 
+}
+```
+
+
+Opérateurs dans R : 
+
+* "> ou <" : plus grand et plus petit que
+* == : strictement égal à 
+* <= : plus petit ou égal à
+* != : différent de 
+
+
+## Exercice 3
+
+Dans un nouveau script r, transcrivez le code suivant : 
+
+
+```{r}
+a <- -15
+b <- 3
+
+# if (...){
+#   ...
+# } else {
+#   ...
+# }
+  
+```
+
+Et complétez le code en remplacant les ... par les bons arguments tel que si b < 3, alors la console renvoie "plus petit que 3", et dans le cas contraire "plus grand ou égal à 3"
+
+## Correction exercice 3
+
+```{r}
+a <- -15
+b <- 3
+
+if (b<3){
+ print("plus petit que 3")
+} else {
+ print("plus grand ou égal à 3")
+}
+  
+```
+
+## ET et OU statements
+
+Pour intégrer les ET et les OU 
+
+* & : ET
+
+et il est possible de les inclures dans la syntaxe comme ceci : 
+
+```{r}
+a <- -15
+b <- 3
+
+if (b>= 3 & b<= 10) {
+  print("b est compris entre 3 et 10")
+  print(paste("b vaut",b))
+}
+
+```
+
+## ET et OU statements
+
+Pour les OU : 
+
+* "|" : ou
+
+```{r}
+a <- -15
+b <- 3
+
+if (b==3 | b== 10) {
+  print("b est soit égal à 3 soit égal à 10")
+  print(paste("b vaut",b))
+}
+
+```
+
+## ELSE IF statements
+
+* Avantage de R par rapport à Excel : possibilité d'insérer autant de condition dans un if statement que souhaité
+* Utilité du else if : 
+
+
+```{r}
+a <- -15
+b <- 3
+
+if (b ==3 & a == -16) {
+  print("bouh!!! R est vraiment nul en maths... ")
+  print(paste("b vaut",b))
+} else if (a == -15) {
+  print(paste("puisque a vaut", a, "et que b vaut", b, "la vie est belle !"))
+}
+
+```
+
+## A vous de jouer ! (si vous êtes encore d'humeur...)
+
+Rappel de la syntaxe : 
+```{autre}
+if (argument logique1 &/| argument logique 2) {
+  "action si l'argument logique est vrai"
+}else if (argument logique traité si le premier est faux) {
+  "action si le second argument logique est vrai"
+} else {
+  "action si aucun des arguments n'est correct"
+}
+```
+
+## Exercice 4: 
+
+Transcrivez le code suivant dans vortre script R : 
+```{r}
+x <- 1
+y <- 2
+z <- 3
+# 
+# if (... &/| ...) {
+#   ...(...(... , ...))
+# } else if (...< ...){
+#   ...(...)
+# }
+
+```
+
+Et complétez-le de telle manière que si x < y et que z < y, la console affiche "youpi, la valeur de x est [val de x]". Dans le cas où ce serait faux, si x < z alors la console affiche "Good job !!!"
+
+## Correction exercice 4 : 
+
+```{r}
+x <- 1
+y <- 2
+z <- 3
+
+if (x<y & z< y) {
+ print(paste("youpi, la valeur de x est" , x))
+} else if (x<z){
+ print("Good job !!!")
+}
+
+```
+
+## C'est bien joli tout ca mais... 
+
+* Pour nous le but de ces statements est de pouvoir les utiliser dans des dataframes ! 
+* Comment faire ?
+
+**soit** : 
+
+* En ciblant une ligne et une colonne précise dans un dataframe
+* En utilisant une boucle for
+* autres fonctions telles que revalue (package dplyr) non traitées ici
+
+## En ciblant une valeur dans un dataframe
+
+Il est possible de dire à R, prends la valeurs se trouvant à la ligne 3 de la 4ème colonne du dataframe et compare la à celle de la ligne 3 et 5ème colonne. 
+Pour cela, utiliser la syntaxe : 
+
+```{autre}
+nom.du.df[no.de.la.ligne , no.de.la.colonne]
+
+```
+
+## En ciblant une valeur dans un dataframe
+
+soit le dataframe df : 
+
+```{r}
+x <- rnorm(n = 30, mean = 10, sd = 1)
+y <- rnorm(n = 30, mean = 0, sd = 0.5)
+z <- rnorm(n = 30, mean = -100, sd = 20)
+df <- data.frame(x,y,z)
+
+head(df,3)
+```
+
+## En ciblant une valeur dans un dataframe
+
+Rappel : 
+* Moyenne de x = 10
+* Moyenne de y = 0
+* Moyenne de z = -100
+
+Tentons de comparer si la 2ème valeur de la colonne y est plus petite que la deuxième valeur de la colonne x
+
+```{r}
+if (df[2,2] < df[2,1]) {
+  print("c'est bien le cas")
+  a <- TRUE
+}
+
+a
+```
+
+## En ciblant une valeur dans un dataframe
+
+Problème de cette méthode : implique de faire cela pour chaque ligne manuellement... 
+Pas très pratique... 
+
+Il faudrait pouvoir double-cliquer sur le petit carré en bas à droite de la cellule ! 
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center', fig.width= 2, fig.height=1}
+
+cell_excel <- readPNG("D:/menetre/Desktop/pres if R seminar/cell.PNG")
+grid.raster(cell_excel)
+```
+
+Autre solution : utiliser des boucles for
+
+## En utilisant une boucle for
+
+Attention ! méthode assez complexe, ne prennez pas peur !
+
+Syntaxe : 
+
+```{autre}
+for (i in 1:dim(dataframe)[1]) {
+  if (dataframe$variable[i] == "cible") {
+    dataframe$autre.variable [i] <- "contenu"
+  } else {
+    dataframe$autre.variable[i] <- "autre contenu"
+  }
+}
+```
+
+Avec possibilité de compléter par d'autres if, else if à volonté
+Avantage par rapport à Excel : quasi aucune limite ! 
+
+## En utilisant une boucle for
+
+En décrypté : 
+
+```{autre}
+for (i in 1:dim(dataframe)[1]) {
+  if (dataframe$variable[i] == "cible") {
+    dataframe$autre.variable [i] <- "contenu"
+  } else {
+    dataframe$autre.variable[i] <- "autre contenu"
+  }
+}
+```
+
+* i : variable temporaire dans laquelle le numéro de la ligne va être stocké
+* in 1:dim(dataframe) : donne la durée de la boucle, ici de la ligne 1 au nombre de lignes que comporte le dataframe
+* [1] : commencer à la première ligne 
+* boucle if standard excepté que l'on spécifie qu'il s'agit de la valeur de la ligne numéro i
+
+la fonction for fait tourner la boucle une première fois pour la ligne 1, puis une seconde fois pous la ligne 2, etc. 
+
+## En utilisant une boucle for
+
+En décrypté : 
+
+```{autre}
+for (i in 1:dim(dataframe)[1]) {
+  if (dataframe$variable[i] == "cible") {
+    dataframe$autre.variable [i] <- "contenu"
+  } else {
+    dataframe$autre.variable[i] <- "autre contenu"
+  }
+}
+```
+
+* [1] : commencer à la première ligne 
+* boucle if standard excepté que l'on spécifie qu'il s'agit de la valeur de la ligne numéro i
+
+la fonction for fait tourner le if une première fois pour la ligne 1, puis une seconde fois pous la ligne 2, etc. 
+
+## Exemple de boucle for
+
+Créons un nouveau dataframe : 
+
+```{r}
+Fumeur <- c("oui", "oui", "non", "non")
+Age <- c(45, 22, 12, 56)
+Choix <- c("a", "b", "c", "d")
+
+df_2 <- data.frame(Fumeur,Age,Choix)
+head(df_2)
+
+```
+
+## Exemple de boucle for
+
+Créons une nouvelle variable dans laquelle je vais entrer le résultat de la boucle for: 
+
+```{r}
+df_2$Garde <- NA
+head(df_2)
+```
+
+
+## Exemple de boucle for
+
+Et finalement la boucle for :
+```{r}
+for (i in 1:dim(df_2)[1]) {
+  if (df_2$Fumeur[i] == "oui" & df_2$Age[i] > 40) {
+    df_2$Garde[i] <- "gardé"
+  } else {
+    df_2$Garde[i] <- "rejetté"
+  }
+}
+
+head(df_2)
+```
+
+
+## A vous de jouer ! 
+
+Rappel de la syntaxe : 
+
+```{autre}
+for (i in 1:dim(dataframe)[1]) {
+  if (dataframe$variable[i] == "cible") {
+    dataframe$autre.variable [i] <- "contenu"
+  } else {
+    dataframe$autre.variable[i] <- "autre contenu"
+  }
+}
+```
+
+
+## Exercice 5 
+
+Remplacez les données manquantes pour que dans le dataframe df_2: 
+
+```{r}
+
+df_2$ex.5 <- NA
+
+# for (i in 1:dim(...)[1]) {
+#   if (...$...[...] == "..." &/| ...$...[...] == ... ) {
+#     ...$...[...] <- "..."
+#   } else {
+#     ...$...[...] <- "..."
+#   }
+# }
+
+```
+
+le/les participant/s  non-fumeur/s de 56 ans soient inclus à votre étude. Les patients inclus auront la mention "gardé" alors que les autres la mention "rejetté"
+
+## Correction de l'exercice 5
+
+```{r}
+
+for (i in 1:dim(df_2)[1]) {
+  if (df_2$Fumeur[i] == "non" & df_2$Age[i] == 56) {
+    df_2$ex.5[i] <- "gardé"
+  } else {
+    df_2$ex.5[i] <- "rejetté"
+  }
+}
+
+head(df_2)
+
+```
+
+
+
+## Fin des souffrances ! 
+
+* Au premier abord R parait compliqué mais donne infiniment plus de possibilités ! 
+
+Par exemple : 
+
+```{autre}
+for (i in 1:dim(from)[1]) {
+  for (j in 1:dim(to)[1]) {
+    if (to[j, col.to] == from[i,col.code.subj.from]) {
+      to[j,col.to] <- from[i,col.from]
+    } 
+  }
+}
+
+```
+
+Code permettant de copier les informations d'une sous-base de données dans une grande base de données. 
+Exemple d'application : savoir quel étudiant figure dans une grande liste d'étudiants 
+
+## Fin des souffrances ! 
+
+* Au premier abord R parait compliqué mais donne infiniment plus de possibilités ! 
+* Permet également avec les bons codes de supprimer les outliers à +2SD et -2SD
+* Temps de codage non dépendant de la longueur de la base de données !
+* Possibilités infinies !
+
+* Pour y arriver il suffit de vous entrainer... 
+
+## Merci de votre attention !
+
+```{r, echo=FALSE, warning=FALSE, fig.align='center'}
+
+brain_smoke <- readPNG("D:/menetre/Desktop/pres if R seminar/brain_smoke.PNG")
+grid.raster(brain_smoke)
+```
+
